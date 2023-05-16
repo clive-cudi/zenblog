@@ -1,0 +1,16 @@
+---
+import { useSanityClient } from "astro-sanity";
+import type { Post } from "./[slug].astro";
+
+const sanity = useSanityClient();
+
+const allPosts = await sanity.fetch<Post[]>(`*[_type == "post"]`);
+const allAuthors = await sanity.fetch(`*[_type == "author"]`);
+---
+
+<h1>All Posts</h1>
+{allPosts?.map((p_) => <h4>{p_.title}</h4>)}
+<script>
+    console.log("SHIPPED")
+</script>
+{allAuthors?.map((author_: any) => <h4>{author_.name}</h4>)}
