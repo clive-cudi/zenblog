@@ -2,6 +2,7 @@
 import Header from "../components/astro/Header.astro";
 import Navbar from "../components/astro/Navbar.astro";
 import "../styles/styles.scss";
+import styles from "../styles/pages/index.module.scss";
 import type { NavLink } from "../types";
 
 const navLnks: NavLink[] = [
@@ -12,6 +13,40 @@ const navLnks: NavLink[] = [
 	{
 		label: "About",
 		linkTo: "#"
+	},
+	{
+		label: "Products",
+		linkTo: "#",
+		isParent: {
+			status: true,
+			children: [
+				{
+					label: "",
+					linkTo: "#"
+				}
+			]
+		}
+	},
+	{
+		label: "Resources",
+		linkTo: "#",
+		isParent: {
+			status: true,
+			children: [
+				{
+					label: "Docs",
+					linkTo: "#"
+				},
+				{
+					label: "Authors",
+					linkTo: "#"
+				}
+			]
+		}
+	},
+	{
+		label: "Pricing",
+		linkTo: "#"
 	}
 ]
 ---
@@ -19,9 +54,23 @@ const navLnks: NavLink[] = [
 <html lang="en">
 	<Header title="Home" decription="Zenblog landing page" />
 	<body>
-		<main class="app">
-			<div class="content">
+		<main class={`app ${styles.app}`}>
+			<div class={`content ${styles.content}`}>
 				<Navbar links={navLnks} />
+				<section class={`${styles.home_section} ${styles.home_greeting_section}`}>
+					<div class={styles.hg_banner}>
+						<div class={styles.hg_strip}>
+							<h4>The blog</h4>
+						</div>
+						<div class={styles.hg_strip}>
+							<h1>Writings from our team</h1>
+							<span data-elm-type="burst-icon"><img src="/team_ender_ill.png" alt="_" /></span>
+						</div>
+						<div class={styles.hg_strip}>
+							<h3>The latest industry news, interviews, technologies and resources.</h3>
+						</div>
+					</div>
+				</section>
 			</div>
 		</main>
 	</body>

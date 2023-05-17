@@ -1,6 +1,7 @@
 ---
 import type { NavLink } from "../../types";
-import styles from "@styles/components/astro/navbar.module.scss";
+import styles from "../../styles/components/astro/navbar.module.scss";
+import { Icon } from "astro-icon";
 
 interface Props {
     links: NavLink[]
@@ -18,12 +19,12 @@ const { links } = Astro.props;
     </div>
     <div class={`${styles.nav_col}`}>
         <!-- links -->
-        <ul>
+        <ul class={styles.nav_primary_links}>
             {links.map((lnk) => {
                 if (lnk.isParent?.status === true) {
                     // render secondary links
-                    <li>
-                        <a href={"#"}></a>
+                    return (<li data-elm-prop={"has-secondary"}>
+                        <a href={"#"}>{lnk.label}<Icon name={"mdi:chevron-down"} /></a>
                         {
                             lnk.isParent.children ?
                                 <div class={styles.nav_sec_links}>
@@ -37,11 +38,11 @@ const { links } = Astro.props;
                                 </div>
                             : null
                         }
-                    </li>
+                    </li>)
                 } else {
-                    <li>
+                    return (<li>
                         <a href={lnk.linkTo}>{lnk.label}</a>
-                    </li>
+                    </li>)
                 }
             })}
         </ul>
