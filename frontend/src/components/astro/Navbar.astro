@@ -1,0 +1,49 @@
+---
+import type { NavLink } from "../../types";
+import styles from "@styles/components/astro/navbar.module.scss";
+
+interface Props {
+    links: NavLink[]
+}
+
+const { links } = Astro.props;
+---
+
+<nav>
+    <div class={`${styles.nav_col}`}>
+        <!-- icon -->
+        <div class={styles.nav_icon_wrapper}>
+            <img src="/zenblog-icon-with-title-removebg-preview.png" />
+        </div>
+    </div>
+    <div class={`${styles.nav_col}`}>
+        <!-- links -->
+        <ul>
+            {links.map((lnk) => {
+                if (lnk.isParent?.status === true) {
+                    // render secondary links
+                    <li>
+                        <a href={"#"}></a>
+                        {
+                            lnk.isParent.children ?
+                                <div class={styles.nav_sec_links}>
+                                    <ul>
+                                        {lnk.isParent?.children.map((lnk_child) => (
+                                            <li>
+                                                <a href={lnk_child.linkTo}>{lnk_child.label}</a>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            : null
+                        }
+                    </li>
+                } else {
+                    <li>
+                        <a href={lnk.linkTo}>{lnk.label}</a>
+                    </li>
+                }
+            })}
+        </ul>
+    </div> 
+</nav>

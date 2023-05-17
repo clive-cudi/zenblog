@@ -1,15 +1,28 @@
 ---
+import Header from "../components/astro/Header.astro";
+import Navbar from "../components/astro/Navbar.astro";
+import "../styles/styles.scss";
+import type { NavLink } from "../types";
+
+const navLnks: NavLink[] = [
+	{
+		label: "Home",
+		linkTo: "/home",
+	},
+	{
+		label: "About",
+		linkTo: "#"
+	}
+]
 ---
 
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
+	<Header title="Home" decription="Zenblog landing page" />
 	<body>
-		<h1>Astro</h1>
+		<main class="app">
+			<div class="content">
+				<Navbar links={navLnks} />
+			</div>
+		</main>
 	</body>
 </html>
