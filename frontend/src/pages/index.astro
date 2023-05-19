@@ -4,6 +4,8 @@ import Navbar from "../components/astro/Navbar.astro";
 import "../styles/styles.scss";
 import styles from "../styles/pages/index.module.scss";
 import type { NavLink } from "../types";
+import PublicationTag from "../components/astro/PublicationTag.astro";
+import TopicBadge from "../components/astro/TopicBadge.astro";
 
 const navLnks: NavLink[] = [
 	{
@@ -48,7 +50,27 @@ const navLnks: NavLink[] = [
 		label: "Pricing",
 		linkTo: "#"
 	}
-]
+];
+const dayPostData = {
+	publisher: {
+		name: "Olivia Rhye"
+	},
+	publicationDate: "20 Jan 2022",
+	title: "UX review presentations",
+	description: "How do you create compelling presentations that wow your colleagues and impress your managers?",
+	img: "/images/pexels-аліна-скорженко-16839579.jpg",
+	tags: [
+		{
+			title: "Design"
+		},
+		{
+			title: "Research"
+		},
+		{
+			title: "Presentation"
+		},
+	]
+}
 ---
 
 <html lang="en">
@@ -68,6 +90,25 @@ const navLnks: NavLink[] = [
 						</div>
 						<div class={styles.hg_strip}>
 							<h3>The latest industry news, interviews, technologies and resources.</h3>
+						</div>
+					</div>
+					<div class={styles.hg_poster}>
+						<!-- post of the day -->
+						<div class={styles.hg_poster_content} style={`background-image: url('${dayPostData.img}')`}>
+							<div class={styles.hg_poster_info}>
+								<div class={styles.hg_poster_info_strip}>
+									<PublicationTag name={dayPostData.publisher.name} date={dayPostData.publicationDate} />
+								</div>
+								<div class={styles.hg_poster_info_strip}>
+									<h2>{dayPostData.title}</h2>
+								</div>
+								<div class={styles.hg_poster_info_strip}>
+									<h4>{dayPostData.description}</h4>
+								</div>
+								<div class={styles.hg_poster_info_strip}>
+									{dayPostData.tags.map((tag_) => <TopicBadge label={tag_.title} />)}
+								</div>
+							</div>
 						</div>
 					</div>
 				</section>

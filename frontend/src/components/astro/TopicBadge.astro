@@ -1,0 +1,7 @@
+---
+import styles from "../../styles/components/astro/publicationTag.module.scss";
+
+const { label } = Astro.props;
+---
+
+<span class={styles.topic_badge}>{label}</span>

@@ -15,10 +15,15 @@
     width: 100%;
     overflow: auto;
     flex-direction: column;
+    scrollbar-width: 0px;
     section {
         display: flex;
         height: 100vh;
         width: 100vw;
+    }
+    &::-webkit-scrollbar {
+        display: none;
+        width: 0px
     }
 }
 
