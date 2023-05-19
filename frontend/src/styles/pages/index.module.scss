@@ -55,7 +55,7 @@
             }
             .hg_poster {
                 display: flex;
-                height: 500px;
+                height: 600px;
                 min-height: 500px;
                 width: 100%;
                 align-items: center;
@@ -66,19 +66,42 @@
                     display: flex;
                     height: 100%;
                     width: 100%;
-                    max-width: 1000px;
+                    // max-width: 1000px;
                     align-items: flex-end;
-                    padding: 20px;
+                    // padding: 30px;
                     background-repeat: no-repeat;
                     background-position: center;
                     background-size: cover;
+                    position: relative;
                     .hg_poster_info {
                         display: flex;
                         height: fit-content;
                         width: 100%;
                         flex-direction: column;
-                        row-gap: 10px;
+                        row-gap: 20px;
                         color: white;
+                        z-index: 2;
+                        padding: 30px;
+                        .hg_poster_info_strip {
+                            display: flex;
+                            height: fit-content;
+                            width: 100%;
+                            column-gap: 10px;
+                            h2 {
+                                font-size: 32px;
+                                font-family: 'Wix Madefor Display', sans-serif;
+                            }
+                            h4 {
+                                font-family: 'Lato', sans-serif;
+                                margin: 0px 0px 10px 0px;
+                            }
+                        }
+                    }
+                    .hg_poster_filter_overlay {
+                        position: absolute;
+                        height: 100%;
+                        width: 100%;
+                        background: linear-gradient(180deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.683));
                     }
                 }
             }
