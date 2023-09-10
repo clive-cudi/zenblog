@@ -1,0 +1,11 @@
+---
+import styles from "../../styles/components/astro/publicationTag.module.scss";
+
+interface Props {
+    label: string
+    variant?: "dark" | "light"
+}
+const { label, variant = "light" } = Astro.props;
+---
+
+<span class={`${styles.topic_badge} ${styles[`topic_badge_${variant}`]}`}>{label}</span>

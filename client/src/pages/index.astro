@@ -1,0 +1,164 @@
+---
+import Header from "../components/astro/Header.astro";
+import Navbar from "../components/astro/Navbar.astro";
+import "../styles/styles.scss";
+import styles from "../styles/pages/index.module.scss";
+import type { NavLink } from "../types";
+import PublicationTag from "../components/astro/PublicationTag.astro";
+import TopicBadge from "../components/astro/TopicBadge.astro";
+import PostCard from "../components/astro/PostCard.astro";
+
+const navLnks: NavLink[] = [
+	{
+		label: "Home",
+		linkTo: "/home",
+	},
+	{
+		label: "About",
+		linkTo: "#"
+	},
+	{
+		label: "Resources",
+		linkTo: "#",
+		isParent: {
+			status: true,
+			children: [
+				{
+					label: "Docs",
+					linkTo: "#"
+				},
+				{
+					label: "Authors",
+					linkTo: "#"
+				}
+			]
+		}
+	}
+];
+const dayPostData = {
+	publisher: {
+		name: "Olivia Rhye"
+	},
+	publicationDate: "20 Jan 2022",
+	title: "UX review presentations",
+	description: "How do you create compelling presentations that wow your colleagues and impress your managers?",
+	img: "/images/pexels-аліна-скорженко-16839579.jpg",
+	tags: [
+		{
+			title: "Design"
+		},
+		{
+			title: "Research"
+		},
+		{
+			title: "Presentation"
+		},
+	]
+}
+const postRecommendationsData: {
+    publication: {
+        name: string,
+        date: string
+    };
+    title: string;
+    briefDescription: string,
+    topics: string[],
+	posterURL: string
+}[]  = [
+	{
+		publication: {
+			name: "Phoenix Baker",
+			date: "19 Jan 2022"
+		},
+		title: "Migrating to Linear 101",
+		briefDescription: "Linear helps streamline software projects, sprints, tasks and bug tracking. Here's how to get started.",
+		topics: ["Product", "Tools", "Saas"],
+		posterURL: 'https://source.unsplash.com/random'
+	},
+	{
+		publication: {
+			name: "Phoenix Baker",
+			date: "19 Jan 2022"
+		},
+		title: "Migrating to Linear 101",
+		briefDescription: "Linear helps streamline software projects, sprints, tasks and bug tracking. Here's how to get started.",
+		topics: ["Product", "Tools", "Saas"],
+		posterURL: ''
+	},
+	{
+		publication: {
+			name: "Phoenix Baker",
+			date: "19 Jan 2022"
+		},
+		title: "Migrating to Linear 101",
+		briefDescription: "Linear helps streamline software projects, sprints, tasks and bug tracking. Here's how to get started.",
+		topics: ["Product", "Tools", "Saas"],
+		posterURL: 'https://source.unsplash.com/random'
+	},
+	{
+		publication: {
+			name: "Phoenix Baker",
+			date: "19 Jan 2022"
+		},
+		title: "Migrating to Linear 101",
+		briefDescription: "Linear helps streamline software projects, sprints, tasks and bug tracking. Here's how to get started.",
+		topics: ["Product", "Tools", "Saas"],
+		posterURL: 'https://source.unsplash.com/random'
+	}
+]
+---
+
+<html lang="en">
+	<Header title="Home" decription="Zenblog landing page" />
+	<body>
+		<main class={`app ${styles.app}`}>
+			<div class={`content ${styles.content}`}>
+				<Navbar links={navLnks} />
+				<section class={`${styles.home_section} ${styles.home_greeting_section}`}>
+					<div class={styles.hg_banner}>
+						<!-- <div class={styles.hg_strip}>
+							<h4>The blog</h4>
+						</div> -->
+						<div class={styles.hg_strip}>
+							<h1>Writings from our team</h1>
+							<span data-elm-type="burst-icon"><img src="/team_ender_ill.png" alt="_" /></span>
+						</div>
+						<div class={styles.hg_strip}>
+							<h3>The latest industry news, interviews, technologies and resources.</h3>
+						</div>
+					</div>
+					<div class={styles.hg_poster}>
+						<!-- post of the day -->
+						<div class={styles.hg_poster_content} style={`background-image: url('${dayPostData.img}')`}>
+							<div class={styles.hg_poster_filter_overlay}></div>
+							<div class={styles.hg_poster_info}>
+								<div class={styles.hg_poster_info_strip}>
+									<PublicationTag name={dayPostData.publisher.name} date={dayPostData.publicationDate} />
+								</div>
+								<div class={styles.hg_poster_info_strip}>
+									<h2>{dayPostData.title}</h2>
+								</div>
+								<div class={styles.hg_poster_info_strip}>
+									<h4>{dayPostData.description}</h4>
+								</div>
+								<div class={styles.hg_poster_info_strip}>
+									{dayPostData.tags.map((tag_) => <TopicBadge label={tag_.title} />)}
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
+				<section class={styles.section_header}>
+					<h2>Recent Posts</h2>
+				</section>
+				<section id="cards" class={styles.post_cards_wrapper}>
+					<!-- display post cards -->
+					{postRecommendationsData.map((pst_) => <PostCard {...pst_} />)}
+				</section>
+				<footer>
+					
+				</footer>
+			</div>
+		</main>
+	</body>
+</html>

@@ -1,0 +1,11 @@
+---
+import styles from "../../styles/components/astro/publicationTag.module.scss";
+
+const { name, date} = Astro.props;
+---
+
+<div class={styles.ptg}>
+    <span class={styles.ptg_name}>{name ?? ""}</span>
+    <span class={styles.ptg_period}>&#x2022;</span>
+    <span class={styles.ptg_date}>{date ?? ""}</span>
+</div>

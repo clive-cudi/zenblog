@@ -1,0 +1,21 @@
+.button {
+    display: flex;
+    height: 40px;
+    width: fit-content;
+    padding: 10px;
+    column-gap: 10px;
+    border-radius: 6px;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-family: "Inter", sans-serif;
+    &.default {
+        background: none;
+        border: 1px solid black;
+    }
+    &.primary {
+        background: black;
+        border: 1px solid black;
+        color: white;
+    }
+}

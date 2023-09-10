@@ -1,0 +1,12 @@
+---
+import styles from "../../../styles/components/astro/reusable/button.module.scss"
+
+interface Props extends astroHTML.JSX.ButtonHTMLAttributes {
+    variant?: "default" | "primary" | "text"
+}
+const { variant = "default", ...utilProps } = Astro.props;
+---
+
+<button class={`${styles.button} ${styles[variant]} ${utilProps?.class ?? ""}`} {...utilProps}>
+    <slot />
+</button>

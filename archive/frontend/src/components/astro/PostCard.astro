@@ -1,0 +1,40 @@
+---
+import styles from "../../styles/components/astro/postCard.module.scss";
+import PublicationTag from "./PublicationTag.astro";
+import TopicBadge from "./TopicBadge.astro";
+
+/**
+ * @type {{publication: {name: string, date: string}, title: string, briefDescription: string, topics: string[]}}
+ */
+interface Props {
+    publication: {
+        name: string,
+        date: string
+    };
+    title: string;
+    briefDescription: string;
+    topics: string[];
+    posterURL: string;
+} 
+const { publication, title, briefDescription, topics, posterURL } = Astro.props;
+---
+
+<div class={styles.pc_wrapper}>
+        <div class={styles.pc_header_img}>
+            <img src={posterURL} alt={`@${title}_poster_img`} />
+        </div>
+        <div class={styles.pc_content}>
+            <div class={styles.pc_content_strip}>
+                <PublicationTag name={publication?.name ?? ""} date={publication?.date ?? ""} />
+            </div>
+            <div class={styles.pc_content_strip}>
+                <h2>{title}</h2>
+            </div>
+            <div class={styles.pc_content_strip}>
+                <p>{briefDescription}</p>
+            </div>
+            <div class={styles.pc_content_strip}>
+                {topics?.map((topic: string) => <TopicBadge label={topic} />)}
+            </div>
+        </div>
+</div>

@@ -1,0 +1,32 @@
+.ptg {
+    display: flex;
+    height: fit-content;
+    width: fit-content;
+    column-gap: 4px;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    // font-weight: 700;
+}
+
+.topic_badge {
+    display: flex;
+    height: 20px;
+    width: fit-content;
+    border: 1px solid white;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    border-radius: 10px;
+    &.topic_badge_light {
+        border: 1px solid white;
+        color: white;
+    }
+    &.topic_badge_dark {
+        border: 1px solid black;
+        color: black;
+    }
+}

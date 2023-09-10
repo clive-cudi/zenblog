@@ -108,3 +108,28 @@
         }
     }
 }
+
+@media (max-width: 1000px) {
+    .app {
+        .content {
+            .home_section {
+                .hg_poster {
+                    padding: 0px;
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 680px) {
+    .app {
+        .content {
+            .home_section {
+                padding: 4px;
+                .hg_poster {
+                    padding: 0px;
+                }
+            }
+        }
+    }
+}

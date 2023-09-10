@@ -1,0 +1,106 @@
+nav {
+    display: flex;
+    height: 120px;
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 10px;
+    .nav_col {
+        display: flex;
+        height: 100%;
+        width: fit-content;
+        .nav_icon_wrapper {
+            display: flex;
+            height: 100%;
+            width: 180px;
+            align-items: center;
+            justify-content: center;
+            img {
+                height: 100%;
+                width: 100%;
+                object-fit: contain;
+            }
+        }
+        .nav_primary_links {
+            display: flex;
+            height: 100%;
+            width: 36rem;
+            column-gap: 10px;
+            list-style-type: none;
+            justify-content: space-evenly;
+            align-items: center;
+            li {
+                display: flex;
+                height: 100%;
+                width: fit-content;
+                align-items: center;
+                position: relative;
+                a {
+                    display: flex;
+                    height: 100%;
+                    width: fit-content;
+                    padding: 10px;
+                    font-family: 'Inter';
+                    color: black;
+                    text-decoration: none;
+                    align-items: center;
+                }
+                .nav_sec_links {
+                    display: none;
+                    height: fit-content;
+                    width: fit-content;
+                    position: absolute;
+                    top: 100%;
+                    // border: 1px solid #d0d5dd;
+                    box-shadow: 1px 1px 20px 1px #d0d5dd5e;
+                    border-radius: 6px;
+                    animation: animate-sec-links 0.4s linear forwards;
+                    ul {
+                        display: flex;
+                        height: fit-content;
+                        width: fit-content;
+                        flex-direction: column;
+                        background: white;
+                        padding: 10px;
+                        li {
+                            display: flex;
+                            height: 40px;
+                            width: 140px;
+                            a {
+                                width: 100%;
+                            }
+                        }
+                    }
+                }
+                &[data-elm-prop = "has-secondary"] {
+                    a {
+                        svg {
+                            height: 20px;
+                            width: 20px;
+                            margin: 0px 0px 0px 10px;
+                        }
+                    }
+                    &:hover {
+                        .nav_sec_links {
+                            display: flex;
+                        }
+                    }
+                }
+            }
+        }
+        .nc_auth {
+            display: flex;
+            height: 100%;
+            width: fit-content;
+            align-items: center;
+            column-gap: 10px;
+        }
+    }
+}
+
+@keyframes animate-sec-links {
+    0% {
+        top: 110%;
+        opacity: 0;
+    }
+}

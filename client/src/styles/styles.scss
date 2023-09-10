@@ -1,0 +1,51 @@
+// global styles
+* {
+    margin: 0%;
+    padding: 0%;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-background: black;
+    --primary-font-color: black;
+    --secondary-font-color: rgb(58, 58, 58);
+}
+.app {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+}
+.content {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    overflow: auto;
+    flex-direction: column;
+    scrollbar-width: 0px;
+    background: white;
+    section {
+        display: flex;
+        height: 100vh;
+        width: 100vw;
+    }
+    footer {
+        display: flex;
+        background: linear-gradient(135deg, rgba(238,177,7,1) 22%, rgba(182,20,161,1) 66%);;
+        height: fit-content;
+        width: 100%;
+        padding: 20px;
+    }
+    &::-webkit-scrollbar {
+        display: none;
+        width: 0px
+    }
+}
+
+// fonts
+@import "./fonts.scss";
+
+// @media (prefers-color-scheme: "dark") {
+//     body {
+//         filter: invert(100%);
+//     }
+// }

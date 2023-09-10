@@ -1,0 +1,58 @@
+---
+import type { NavLink } from "../../types";
+import styles from "../../styles/components/astro/navbar.module.scss";
+import { Icon } from "astro-icon";
+import Button from "./reusable/Button.astro";
+
+interface Props {
+    links: NavLink[]
+}
+
+const { links } = Astro.props;
+---
+
+<nav>
+    <div class={`${styles.nav_col}`}>
+        <!-- icon -->
+        <div class={styles.nav_icon_wrapper}>
+            <img src="/zenblog-icon-with-title-removebg-preview.png" />
+        </div>
+    </div>
+    <div class={`${styles.nav_col}`}>
+        <!-- links -->
+        <ul class={styles.nav_primary_links}>
+            {links.map((lnk) => {
+                if (lnk.isParent?.status === true) {
+                    // render secondary links
+                    return (<li data-elm-prop={"has-secondary"}>
+                        <a href={"#"}>{lnk.label}<Icon name={"mdi:chevron-down"} /></a>
+                        {
+                            lnk.isParent.children ?
+                                <div class={styles.nav_sec_links}>
+                                    <ul>
+                                        {lnk.isParent?.children.map((lnk_child) => (
+                                            <li>
+                                                <a href={lnk_child.linkTo}>{lnk_child.label}</a>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            : null
+                        }
+                    </li>)
+                } else {
+                    return (<li>
+                        <a href={lnk.linkTo}>{lnk.label}</a>
+                    </li>)
+                }
+            })}
+        </ul>
+    </div> 
+    <div class={`${styles.nav_col}`}>
+        <!-- < -->
+        <div class={styles.nc_auth}>
+            <Button>Login</Button>
+            <Button variant="primary">Register</Button>
+        </div>
+    </div>
+</nav>

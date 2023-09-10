@@ -71,6 +71,25 @@ const dayPostData = {
 		},
 	]
 }
+const postRecommendationsData: {
+    publication: {
+        name: string,
+        date: string
+    };
+    title: string;
+    briefDescription: string,
+    topics: string[]
+}[]  = [
+	{
+		publication: {
+			name: "Phoenix Baker",
+			date: "19 Jan 2022"
+		},
+		title: "Migrating to Linear 101",
+		briefDescription: "Linear helps streamline software projects, sprints, tasks and bug tracking. Here's how to get started.",
+		topics: ["Product", "Tools", "Saas"]
+	}
+]
 ---
 
 <html lang="en">
@@ -112,6 +131,9 @@ const dayPostData = {
 							</div>
 						</div>
 					</div>
+				</section>
+				<section>
+					<!-- display post cards -->
 				</section>
 			</div>
 		</main>
