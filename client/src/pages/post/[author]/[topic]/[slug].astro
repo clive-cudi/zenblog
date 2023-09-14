@@ -1,0 +1,60 @@
+---
+import type { GetStaticPaths } from "astro";
+import { useSanityClient } from "astro-sanity";
+import type { IAuthor, IPost } from "../../../../types";
+
+export type TSlug = {
+    current: string;
+}
+interface ITopic {
+    name: string;
+    slug: TSlug;
+}
+interface IAuthorWithPosts extends IAuthor {
+    posts: (IPost & {topic: ITopic})[]
+}
+
+export async function getStaticPaths() {
+    const sanity = useSanityClient();
+    
+    const authors: IAuthorWithPosts[] = await sanity.fetch<IAuthorWithPosts[]>(`*[_type == "author"] {
+        name,
+        slug,
+        bio,
+        _id,
+        "posts": *[_type=="post" && references(^._id)] {slug, body, title, mainImage, topic->}
+    }`);
+    console.log(authors.forEach((author) => {console.log(author.posts)}));
+
+    // console.log(authors.map((author) => {
+    //     return author.posts.map((post) => ({...post, author: author}))
+    // }).flatMap((author_) => author_));
+    const posts = authors.map((author) => {
+        const {posts: author_posts, ...author_include} = author;
+        return author.posts.map((post) => ({...post, author: author_include}))
+    }).flatMap((author_) => author_);
+
+    return posts.map((post) => {
+        return {
+            params: {
+                author: post.author.slug.current,
+                topic: post.topic.slug.current,
+                slug: post.slug.current
+            },
+            props: {}
+        }
+    })
+    
+    // return [
+    //     {
+    //         params: {
+    //             author: 'clive',
+    //             topic: 'frontend-development',
+    //             slug: 'introduction-to-nextjs'
+    //         }
+    //     }
+    // ];
+};
+---
+
+<div>Post Page</div>

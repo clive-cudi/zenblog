@@ -1,12 +1,13 @@
 ---
 import { useSanityClient } from "astro-sanity";
-import type { Post } from "./[slug].astro";
+import type { IPost } from "../../types";
 
 const sanity = useSanityClient();
 
-const allPosts = await sanity.fetch<Post[]>(`*[_type == "post"]`);
+const allPosts = await sanity.fetch<IPost[]>(`*[_type == "post"]`);
 const allAuthors = await sanity.fetch(`*[_type == "author"]`);
-console.log(allPosts)
+// console.log(allPosts)
+console.log(allAuthors)
 ---
 
 <h1>All Posts</h1>

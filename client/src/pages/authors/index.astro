@@ -1,0 +1,14 @@
+---
+import { useSanityClient } from "astro-sanity";
+import type { IPost, IAuthor } from "../../types";
+
+const sanity = useSanityClient();
+
+const authors: IAuthor[] = await sanity.fetch<IAuthor[]>(`*[_type == "author"]`);
+---
+
+<div>
+    {
+        authors.map((author) => <a href={`/authors/${author.slug.current}`}>{author.name}</a>)
+    }
+</div>

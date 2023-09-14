@@ -1,0 +1,49 @@
+---
+import { useSanityClient } from "astro-sanity";
+import type { IPost, IAuthor } from "../../types";
+
+export type TSlug = {
+    current: string;
+}
+interface ITopic {
+    name: string;
+    slug: TSlug;
+}
+interface IAuthorWithPosts extends IAuthor {
+    posts: (IPost & {topic: ITopic})[]
+}
+
+export async function getStaticPaths() {
+    const sanity = useSanityClient();
+    
+    const authors: IAuthorWithPosts[] = await sanity.fetch<IAuthorWithPosts[]>(`*[_type == "author"] {
+        name,
+        slug,
+        bio,
+        _id,
+        "posts": *[_type=="post" && references(^._id)] {slug, body, title, mainImage, topic->}
+    }`);
+
+    return authors.map((author) => {
+        return {
+            params: {author: author.slug.current},
+            props: {name: author.name, posts: author.posts, author}
+        }
+    })
+}
+interface Props {
+    posts: (IPost & {topic: ITopic})[];
+    author: IAuthor;
+}
+const { posts, author } = Astro.props;
+---
+
+<div>
+    <h1>Author page</h1>
+    <div>
+        <h2>Posts</h2>
+        {
+            posts.map((post) => <a href={`/post/${author.slug.current}/${post.topic.slug.current}/${post.slug.current}`}>{post.title}</a>)
+        }
+    </div>
+</div>
