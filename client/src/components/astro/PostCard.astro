@@ -3,6 +3,7 @@ import { Icon } from "astro-icon";
 import styles from "../../styles/components/astro/postCard.module.scss";
 import PublicationTag from "./PublicationTag.astro";
 import TopicBadge from "./TopicBadge.astro";
+import type { IAuthor, ITopic, TSlug } from "../../types";
 
 /**
  * @type {{publication: {name: string, date: string}, title: string, briefDescription: string, topics: string[]}}
@@ -10,33 +11,36 @@ import TopicBadge from "./TopicBadge.astro";
 interface Props {
     publication: {
         name: string,
-        date: string
+        date: Date,
+        author: IAuthor;
     };
     title: string;
     briefDescription: string;
-    topics: string[];
+    topic: ITopic;
     posterURL: string;
+    tags?: string[],
+    slug: TSlug;
 } 
-const { publication, title, briefDescription, topics, posterURL } = Astro.props;
+const { publication, title, briefDescription, tags, topic, posterURL, slug } = Astro.props;
 ---
 
 <div class={styles.pc_wrapper}>
-        <div class={styles.pc_header_img}>
-            <img src={posterURL} alt={`@${title}_poster_img`} />
+    <a href={`/post/${publication.author?.slug?.current ?? ""}/${topic?.slug?.current ?? ""}/${slug?.current ?? ""}`}></a>
+    <div class={styles.pc_header_img}>
+        <img src={posterURL} alt={`@${title}_poster_img`} />
+    </div>
+    <div class={styles.pc_content}>
+        <div class={styles.pc_content_strip}>
+            <PublicationTag name={publication?.name ?? ""} author={publication.author} date={new Date(publication?.date).toDateString() ?? ""} />
         </div>
-        <div class={styles.pc_content}>
-            <div class={styles.pc_content_strip}>
-                <PublicationTag name={publication?.name ?? ""} date={publication?.date ?? ""} />
-            </div>
-            <div class={styles.pc_content_strip}>
-                <h2>{title}</h2>
-                <Icon name="arrow-tr" />
-            </div>
-            <div class={styles.pc_content_strip}>
-                <p>{briefDescription}</p>
-            </div>
-            <div class={`${styles.pc_content_strip} ${styles.pc_content_strip_with_badges}`}>
-                {topics?.map((topic: string) => <TopicBadge variant="dark" label={topic} />)}
-            </div>
+        <div class={styles.pc_content_strip}>
+            <a href={`/post/${publication.author?.slug?.current ?? ""}/${topic?.slug?.current ?? ""}/${slug?.current ?? ""}`} data-elm-role={"pc-title"}>{title} <Icon name="arrow-tr" /></a>
         </div>
+        <div class={styles.pc_content_strip}>
+            <p>{briefDescription}</p>
+        </div>
+        <div class={`${styles.pc_content_strip} ${styles.pc_content_strip_with_badges}`}>
+            {tags?.map((tag: string) => <TopicBadge variant="dark" label={tag} />)}
+        </div>
+    </div>
 </div>

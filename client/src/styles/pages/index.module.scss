@@ -98,6 +98,12 @@
                                 font-family: 'Lato', sans-serif;
                                 margin: 0px 0px 10px 0px;
                             }
+                            [data-elm-type = "publication-tag"] {
+                                color: white;
+                                a {
+                                    color: white;
+                                }
+                            }
                         }
                     }
                     .hg_poster_filter_overlay {

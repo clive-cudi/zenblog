@@ -1,11 +1,18 @@
 ---
 import styles from "../../styles/components/astro/publicationTag.module.scss";
+import type { IAuthor } from "../../types";
 
-const { name, date} = Astro.props;
+interface Props {
+    name: string,
+    date: string,
+    author?: IAuthor
+}
+
+const { name, date, author } = Astro.props;
 ---
 
-<div class={styles.ptg}>
-    <span class={styles.ptg_name}>{name ?? ""}</span>
+<div class={styles.ptg} data-elm-type="publication-tag">
+    <a href={`/authors/${author?.slug?.current ?? ""}`} class={styles.ptg_name}>{author?.name ?? ""}</a>
     <span class={styles.ptg_period}>&#x2022;</span>
     <span class={styles.ptg_date}>{date ?? ""}</span>
 </div>

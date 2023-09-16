@@ -31,3 +31,8 @@ export interface IAuthor {
     slug: TSlug;
     title: string
 }
+
+export interface ITopic {
+    name: string;
+    slug: TSlug;
+}

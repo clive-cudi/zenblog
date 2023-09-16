@@ -3,10 +3,11 @@ import Header from "../components/astro/Header.astro";
 import Navbar from "../components/astro/Navbar.astro";
 import "../styles/styles.scss";
 import styles from "../styles/pages/index.module.scss";
-import type { NavLink } from "../types";
+import type { IAuthor, NavLink, ITopic, TSlug } from "../types";
 import PublicationTag from "../components/astro/PublicationTag.astro";
 import TopicBadge from "../components/astro/TopicBadge.astro";
 import PostCard from "../components/astro/PostCard.astro";
+import { useSanityClient } from "astro-sanity";
 
 const navLnks: NavLink[] = [
 	{
@@ -39,7 +40,7 @@ const dayPostData = {
 	publisher: {
 		name: "Olivia Rhye"
 	},
-	publicationDate: "20 Jan 2022",
+	publicationDate: new Date("20 Jan 2022").toDateString(),
 	title: "UX review presentations",
 	description: "How do you create compelling presentations that wow your colleagues and impress your managers?",
 	img: "/images/pexels-аліна-скорженко-16839579.jpg",
@@ -53,59 +54,84 @@ const dayPostData = {
 		{
 			title: "Presentation"
 		},
-	]
+	],
+	author: {
+		name: 'Clive',
+		bio: [
+			{
+			style: 'normal',
+			_key: '5323c47a1466',
+			markDefs: [],
+			children: [Array],
+			_type: 'block'
+			}
+		].toString(),
+		_id: 'a3e4cedc-ae0b-4f4f-9c90-e06c4b740078',
+		profession: 'Frontend Developer/ student',
+		_createdAt: '2023-05-16T07:13:01Z',
+		_type: 'author',
+		_rev: 'iU4xU8SeHwaDO0k2e0HAZ9',
+		_updatedAt: '2023-05-16T07:27:54Z',
+		slug: { current: 'clive', _type: 'slug' },
+		image: "",
+		title: ""
+	}
 }
-const postRecommendationsData: {
+interface IPostRecData {
     publication: {
         name: string,
-        date: string
+        date: Date,
+		author: IAuthor
     };
     title: string;
     briefDescription: string,
-    topics: string[],
-	posterURL: string
-}[]  = [
-	{
+    tags?: string[],
+	posterURL: string,
+	topic: ITopic,
+	slug: TSlug
+}
+let postRecommendationsData: IPostRecData[]  = [
+	// {
+	// 	publication: {
+	// 		name: "Phoenix Baker",
+	// 		date: new Date("19 Jan 2022")
+	// 	},
+	// 	title: "Migrating to Linear 101",
+	// 	briefDescription: "Linear helps streamline software projects, sprints, tasks and bug tracking. Here's how to get started.",
+	// 	topic: "",
+	// 	tags: ["Product", "Tools", "Saas"],
+	// 	posterURL: 'https://source.unsplash.com/random'
+	// },
+];
+
+const sanity = useSanityClient();
+interface IAvailablePosts {
+	title: string;
+	mainImage: {asset: {url: string}};
+	publishedAt: Date;
+	slug: TSlug;
+	author: IAuthor;
+	topic: ITopic;
+	body: object[];
+}
+const availablePosts: IAvailablePosts[] = await sanity.fetch<IAvailablePosts[]>(`*[_type=="post"]{title, mainImage {asset->}, publishedAt, body, slug, topic->, author->}`);
+console.log(availablePosts.forEach((pst) => {console.log(pst.author)}));
+postRecommendationsData = availablePosts.map<IPostRecData>((post) => {
+	return {
 		publication: {
-			name: "Phoenix Baker",
-			date: "19 Jan 2022"
+			name: post.author.name,
+			date: post.publishedAt,
+			author: post.author
 		},
-		title: "Migrating to Linear 101",
-		briefDescription: "Linear helps streamline software projects, sprints, tasks and bug tracking. Here's how to get started.",
-		topics: ["Product", "Tools", "Saas"],
-		posterURL: 'https://source.unsplash.com/random'
-	},
-	{
-		publication: {
-			name: "Phoenix Baker",
-			date: "19 Jan 2022"
-		},
-		title: "Migrating to Linear 101",
-		briefDescription: "Linear helps streamline software projects, sprints, tasks and bug tracking. Here's how to get started.",
-		topics: ["Product", "Tools", "Saas"],
-		posterURL: ''
-	},
-	{
-		publication: {
-			name: "Phoenix Baker",
-			date: "19 Jan 2022"
-		},
-		title: "Migrating to Linear 101",
-		briefDescription: "Linear helps streamline software projects, sprints, tasks and bug tracking. Here's how to get started.",
-		topics: ["Product", "Tools", "Saas"],
-		posterURL: 'https://source.unsplash.com/random'
-	},
-	{
-		publication: {
-			name: "Phoenix Baker",
-			date: "19 Jan 2022"
-		},
-		title: "Migrating to Linear 101",
-		briefDescription: "Linear helps streamline software projects, sprints, tasks and bug tracking. Here's how to get started.",
-		topics: ["Product", "Tools", "Saas"],
-		posterURL: 'https://source.unsplash.com/random'
+		title: post.title,
+		briefDescription: post.slug.current,
+		tags: [post.topic.slug.current],
+		topic: post.topic,
+		posterURL: post?.mainImage?.asset?.url ?? "",
+		slug: post.slug
 	}
-]
+});
+
 ---
 
 <html lang="en">
@@ -133,7 +159,7 @@ const postRecommendationsData: {
 							<div class={styles.hg_poster_filter_overlay}></div>
 							<div class={styles.hg_poster_info}>
 								<div class={styles.hg_poster_info_strip}>
-									<PublicationTag name={dayPostData.publisher.name} date={dayPostData.publicationDate} />
+									<PublicationTag name={dayPostData.publisher.name} author={dayPostData.author} date={dayPostData.publicationDate} />
 								</div>
 								<div class={styles.hg_poster_info_strip}>
 									<h2>{dayPostData.title}</h2>
