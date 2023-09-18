@@ -8,8 +8,9 @@ import PublicationTag from "../components/astro/PublicationTag.astro";
 import TopicBadge from "../components/astro/TopicBadge.astro";
 import PostCard from "../components/astro/PostCard.astro";
 import { useSanityClient } from "astro-sanity";
+import { ViewTransitions } from "astro:transitions";
 
-const navLnks: NavLink[] = [
+export const navLnks: NavLink[] = [
 	{
 		label: "Home",
 		linkTo: "/home",
@@ -115,7 +116,7 @@ interface IAvailablePosts {
 	body: object[];
 }
 const availablePosts: IAvailablePosts[] = await sanity.fetch<IAvailablePosts[]>(`*[_type=="post"]{title, mainImage {asset->}, publishedAt, body, slug, topic->, author->}`);
-console.log(availablePosts.forEach((pst) => {console.log(pst.author)}));
+// console.log(availablePosts.forEach((pst) => {console.log(pst.author)}));
 postRecommendationsData = availablePosts.map<IPostRecData>((post) => {
 	return {
 		publication: {
@@ -135,7 +136,9 @@ postRecommendationsData = availablePosts.map<IPostRecData>((post) => {
 ---
 
 <html lang="en">
-	<Header title="Home" decription="Zenblog landing page" />
+	<Header title="Home" description="Zenblog landing page">
+		<ViewTransitions />
+	</Header>
 	<body>
 		<main class={`app ${styles.app}`}>
 			<div class={`content ${styles.content}`}>

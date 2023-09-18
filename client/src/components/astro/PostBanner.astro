@@ -1,0 +1,19 @@
+---
+import { Image } from "astro:assets";
+import styles from "../../styles/components/astro/postBanner.module.scss";
+import type { IAuthor, IPost } from "../../types";
+
+interface Props extends astroHTML.JSX.HTMLAttributes {
+	profile?: IAuthor;
+	bgImgURL: string;
+	post: IPost;
+}
+
+const { profile, bgImgURL, post, ...utilProps } = Astro.props;
+---
+
+<div class={`${styles.post_banner} ${utilProps?.class ?? ""}`} {...utilProps}>
+	<div class={styles.post_banner_content}>
+		<img transition:name={`transition-${post.slug.current}`} src={bgImgURL} alt={"C"} />
+	</div>
+</div>

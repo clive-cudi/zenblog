@@ -2,6 +2,11 @@
 import type { GetStaticPaths } from "astro";
 import { useSanityClient } from "astro-sanity";
 import type { IAuthor, IPost } from "../../../../types";
+import Header from "../../../../components/astro/Header.astro";
+import Navbar from "../../../../components/astro/Navbar.astro";
+import { navLnks } from "../../../index.astro";
+import styles from "../../../../styles/pages/post/[author]/[topic]/[slug].module.scss";
+import PostBanner from "../../../../components/astro/PostBanner.astro"
 
 export type TSlug = {
     current: string;
@@ -22,9 +27,9 @@ export async function getStaticPaths() {
         slug,
         bio,
         _id,
-        "posts": *[_type=="post" && references(^._id)] {slug, body, title, mainImage, topic->}
+        "posts": *[_type=="post" && references(^._id)] {slug, body, title, mainImage {asset->}, topic->}
     }`);
-    console.log(authors.forEach((author) => {console.log(author.posts)}));
+    console.log(authors.forEach((author) => {author.posts.forEach((ps) => {console.log(ps.mainImage?.asset?.url)})}));
 
     // console.log(authors.map((author) => {
     //     return author.posts.map((post) => ({...post, author: author}))
@@ -41,7 +46,9 @@ export async function getStaticPaths() {
                 topic: post.topic.slug.current,
                 slug: post.slug.current
             },
-            props: {}
+            props: {
+                post
+            }
         }
     })
     
@@ -54,7 +61,25 @@ export async function getStaticPaths() {
     //         }
     //     }
     // ];
-};
+	};
+interface Props {
+    post: (IPost & {topic: ITopic})
+}
+const { post } = Astro.props;
 ---
 
-<div>Post Page</div>
+
+<html lang="en">
+	<Header title="Home" description="Zenblog landing page" />
+	<body>
+		<main class={`app ${styles.app}`}>
+			<div class={`content ${styles.content}`}>
+				<Navbar links={navLnks} />
+				<PostBanner bgImgURL={`${post.mainImage?.asset?.url}`} post={post} />
+				<!-- <footer>
+					
+				</footer> -->
+			</div>
+		</main>
+	</body>
+</html>

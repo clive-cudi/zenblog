@@ -27,7 +27,8 @@ const { publication, title, briefDescription, tags, topic, posterURL, slug } = A
 <div class={styles.pc_wrapper}>
     <a href={`/post/${publication.author?.slug?.current ?? ""}/${topic?.slug?.current ?? ""}/${slug?.current ?? ""}`}></a>
     <div class={styles.pc_header_img}>
-        <img src={posterURL} alt={`@${title}_poster_img`} />
+        <!-- <span>{slug.current}</span> -->
+        <img transition:name={`transition-${slug.current}`} src={posterURL} alt={`@${title}_poster_img`} />
     </div>
     <div class={styles.pc_content}>
         <div class={styles.pc_content_strip}>

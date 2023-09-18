@@ -15,7 +15,12 @@ export interface IPost {
     slug: TSlug;
     title: string;
     body: any;
-    mainImage: object
+    mainImage: {
+        _type: 'image',
+        asset?: {
+            url: string
+        }
+    }
 }
 
 export interface IMainImage {
