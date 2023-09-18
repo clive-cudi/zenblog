@@ -54,17 +54,7 @@ export async function getStaticPaths() {
             }
         }
     })
-    
-    // return [
-    //     {
-    //         params: {
-    //             author: 'clive',
-    //             topic: 'frontend-development',
-    //             slug: 'introduction-to-nextjs'
-    //         }
-    //     }
-    // ];
-	};
+};
 interface Props {
     post: (IPost & {topic: ITopic, author: IAuthor})
 }
