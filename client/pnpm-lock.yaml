@@ -5,6 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  '@portabletext/to-html':
+    specifier: ^2.0.3
+    version: 2.0.3
   '@sanity/client':
     specifier: ^6.4.11
     version: 6.4.11
@@ -1073,8 +1076,23 @@ packages:
       '@portabletext/types': 1.0.3
     dev: false
 
+  /@portabletext/to-html@2.0.3:
+    resolution: {integrity: sha512-X+Z/2HUpGJgUoaBAFI9u2oeWixg7iy8GIwYIQ0kX7yU1L/s6+WOBIPRsaPLJygyzoqDTqx1Z1btRvQclEhXm5g==}
+    engines: {node: ^14.13.1 || >=16.0.0}
+    dependencies:
+      '@portabletext/toolkit': 2.0.8
+      '@portabletext/types': 2.0.6
+    dev: false
+
   /@portabletext/toolkit@1.0.8:
     resolution: {integrity: sha512-SNO8at5crqySCeYa19/mdcZoZvGCINGc/eAX4FwYt02cEzb48hf013BuA9LbEQuTOgpMKxnyeRGpEzxmowmEug==}
+    engines: {node: ^14.13.1 || >=16.0.0}
+    dependencies:
+      '@portabletext/types': 2.0.6
+    dev: false
+
+  /@portabletext/toolkit@2.0.8:
+    resolution: {integrity: sha512-MI3FKYZiL+/dYsClkkTDRjSvNS7K4j+U2LNZ5XIEoq67qCY0l7CYjvT0fn+lFBEUxjegtEmbxLk6T9nV/iXA+Q==}
     engines: {node: ^14.13.1 || >=16.0.0}
     dependencies:
       '@portabletext/types': 2.0.6

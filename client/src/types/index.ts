@@ -21,6 +21,8 @@ export interface IPost {
             url: string
         }
     }
+    publishedAt: string;
+    tags: string[]
 }
 
 export interface IMainImage {

@@ -6,7 +6,10 @@ import Header from "../../../../components/astro/Header.astro";
 import Navbar from "../../../../components/astro/Navbar.astro";
 import { navLnks } from "../../../index.astro";
 import styles from "../../../../styles/pages/post/[author]/[topic]/[slug].module.scss";
-import PostBanner from "../../../../components/astro/PostBanner.astro"
+import PostBanner from "../../../../components/astro/PostBanner.astro";
+import { ViewTransitions } from "astro:transitions";
+import TopicBadge from "../../../../components/astro/TopicBadge.astro";
+import { toHTML } from "@portabletext/to-html";
 
 export type TSlug = {
     current: string;
@@ -27,16 +30,16 @@ export async function getStaticPaths() {
         slug,
         bio,
         _id,
-        "posts": *[_type=="post" && references(^._id)] {slug, body, title, mainImage {asset->}, topic->}
+        "posts": *[_type=="post" && references(^._id)] {slug, body, title, mainImage {asset->}, topic->, publishedAt}
     }`);
-    console.log(authors.forEach((author) => {author.posts.forEach((ps) => {console.log(ps.mainImage?.asset?.url)})}));
+    // console.log(authors.forEach((author) => {author.posts.forEach((ps) => {console.log(ps.mainImage?.asset?.url)})}));
 
     // console.log(authors.map((author) => {
     //     return author.posts.map((post) => ({...post, author: author}))
     // }).flatMap((author_) => author_));
     const posts = authors.map((author) => {
         const {posts: author_posts, ...author_include} = author;
-        return author.posts.map((post) => ({...post, author: author_include}))
+        return author.posts.map((post) => ({...post, author: author_include, tags: [post.topic.slug.current]}))
     }).flatMap((author_) => author_);
 
     return posts.map((post) => {
@@ -63,22 +66,53 @@ export async function getStaticPaths() {
     // ];
 	};
 interface Props {
-    post: (IPost & {topic: ITopic})
+    post: (IPost & {topic: ITopic, author: IAuthor})
 }
 const { post } = Astro.props;
 ---
 
 
 <html lang="en">
-	<Header title="Home" description="Zenblog landing page" />
+	<Header title="Home" description=`${post.title} | Zenblog post` />
+    <ViewTransitions />
 	<body>
 		<main class={`app ${styles.app}`}>
 			<div class={`content ${styles.content}`}>
-				<Navbar links={navLnks} />
+				<Navbar class={`${styles.post_nav}`} links={navLnks} />
 				<PostBanner bgImgURL={`${post.mainImage?.asset?.url}`} post={post} />
-				<!-- <footer>
+                <div class={styles.main_content}>
+                    <section class={styles.post_header}>
+                        <div class={`${styles.ph_strip} ${styles.ph_strip_with_title}`}>
+                            <!-- title -->
+                            <h1 class={styles.ph_title}>{post.title}</h1>
+                            <span class={styles.ph_topic}>Topic: <a href="#">{post.topic.name}</a></span>
+                        </div>
+                        <div class={styles.ph_strip}>
+                            <div class={styles.ph_col}>
+                                <!-- author -->
+                                <span>Author: <a href={`/authors/${post.author.slug.current}`}>{post.author.name}</a></span>
+                            </div>
+                            <div class={styles.ph_col}>
+                                <!-- date -->
+                                <span>{new Date(post.publishedAt).toDateString()}</span>
+                            </div>
+                        </div>
+                    </section>
+                    <hr />
+                    <section class={styles.post_content} set:html={toHTML(post.body, {})}>
+                    </section>
+                    <hr />
+                    <section class={styles.post_header}>
+                        <div class={styles.ph_strip}>
+                            <div class={styles.ph_tags}>
+                                {post.tags.map((tag) => (<TopicBadge variant="dark" label={tag} />))}
+                            </div>
+                        </div>
+                    </section>
+                </div>
+				<footer>
 					
-				</footer> -->
+				</footer>
 			</div>
 		</main>
 	</body>

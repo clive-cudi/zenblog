@@ -4,55 +4,125 @@ import styles from "../../styles/components/astro/navbar.module.scss";
 import { Icon } from "astro-icon";
 import Button from "./reusable/Button.astro";
 
-interface Props {
+interface Props extends astroHTML.JSX.HTMLAttributes {
     links: NavLink[]
 }
 
-const { links } = Astro.props;
+const { links, ...utilProps } = Astro.props;
+
 ---
 
-<nav>
-    <div class={`${styles.nav_col}`}>
-        <!-- icon -->
-        <div class={styles.nav_icon_wrapper}>
-            <img src="/zenblog-icon-with-title-removebg-preview.png" />
+<nav class={`${utilProps.class ?? ""}`}>
+    <div class={styles.nav_content}>
+        <div class={`${styles.nav_col}`}>
+            <!-- icon -->
+            <div class={styles.nav_icon_wrapper}>
+                <img src="/zenblog-icon-with-title-removebg-preview.png" />
+            </div>
+        </div>
+        <div class={`${styles.nav_col}`}>
+            <!-- links -->
+            <ul class={styles.nav_primary_links}>
+                {links.map((lnk) => {
+                    if (lnk.isParent?.status === true) {
+                        // render secondary links
+                        return (<li data-elm-prop={"has-secondary"}>
+                            <a href={"#"}>{lnk.label}<Icon name={"mdi:chevron-down"} /></a>
+                            {
+                                lnk.isParent.children ?
+                                    <div class={styles.nav_sec_links}>
+                                        <ul>
+                                            {lnk.isParent?.children.map((lnk_child) => (
+                                                <li>
+                                                    <a href={lnk_child.linkTo}>{lnk_child.label}</a>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                : null
+                            }
+                        </li>)
+                    } else {
+                        return (<li>
+                            <a href={lnk.linkTo}>{lnk.label}</a>
+                        </li>)
+                    }
+                })}
+            </ul>
+        </div> 
+        <div class={`${styles.nav_col}`}>
+            <!-- < -->
+            <div class={styles.nc_auth}>
+                <Button>Login</Button>
+                <Button variant="primary">Register</Button>
+            </div>
+        </div>
+        <div class={`${styles.nav_col} ${styles.nav_menu_btn}`}>
+            <Button id={"nav_toggle_btn"}><Icon name={"menu-line"} /></Button>
         </div>
     </div>
-    <div class={`${styles.nav_col}`}>
-        <!-- links -->
-        <ul class={styles.nav_primary_links}>
-            {links.map((lnk) => {
-                if (lnk.isParent?.status === true) {
-                    // render secondary links
-                    return (<li data-elm-prop={"has-secondary"}>
-                        <a href={"#"}>{lnk.label}<Icon name={"mdi:chevron-down"} /></a>
-                        {
-                            lnk.isParent.children ?
-                                <div class={styles.nav_sec_links}>
-                                    <ul>
-                                        {lnk.isParent?.children.map((lnk_child) => (
-                                            <li>
-                                                <a href={lnk_child.linkTo}>{lnk_child.label}</a>
-                                            </li>
-                                        ))}
-                                    </ul>
-                                </div>
-                            : null
-                        }
-                    </li>)
-                } else {
-                    return (<li>
-                        <a href={lnk.linkTo}>{lnk.label}</a>
-                    </li>)
-                }
-            })}
-        </ul>
-    </div> 
-    <div class={`${styles.nav_col}`}>
-        <!-- < -->
-        <div class={styles.nc_auth}>
-            <Button>Login</Button>
-            <Button variant="primary">Register</Button>
+    <div id="nav_min" class={`${styles.nav_min}`}>
+        <div class={styles.nav_col}>
+            <div class={styles.nav_icon_wrapper}>
+                <img src="/zenblog-icon-with-title-removebg-preview.png" />
+            </div>
+        </div>
+        <div class={styles.nav_col}>
+            <ul class={styles.nav_primary_links}>
+                {links.map((lnk) => {
+                    if (lnk.isParent?.status === true) {
+                        // render secondary links
+                        return (<li data-elm-prop={"has-secondary"}>
+                            <a href={"#"}>{lnk.label}<Icon name={"mdi:chevron-down"} /></a>
+                            {
+                                lnk.isParent.children ?
+                                    <div class={styles.nav_sec_links}>
+                                        <ul>
+                                            {lnk.isParent?.children.map((lnk_child) => (
+                                                <li>
+                                                    <a href={lnk_child.linkTo}>{lnk_child.label}</a>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                : null
+                            }
+                        </li>)
+                    } else {
+                        return (<li>
+                            <a href={lnk.linkTo}>{lnk.label}</a>
+                        </li>)
+                    }
+                })}
+            </ul>
+        </div>
+        <div class={`${styles.nav_col}`}>
+            <!-- < -->
+            <div class={styles.nc_auth}>
+                <Button>Login</Button>
+                <Button variant="primary">Register</Button>
+            </div>
         </div>
     </div>
 </nav>
+
+<script>
+    const nav_min = document.getElementById("nav_min");
+    const nav_btn = document.getElementById("nav_toggle_btn");
+
+    function toggleNavMin() {
+        const isActive = nav_min?.classList.contains('nav_min_active');
+
+        if (isActive) {
+            nav_min?.classList.remove('nav_min_active');
+            nav_min?.classList.add('nav_min_inactive');
+        } else {
+            nav_min?.classList.remove('nav_min_inactive');
+            nav_min?.classList.add('nav_min_active');
+        }
+    }
+
+    nav_btn?.addEventListener('click', () => {
+        toggleNavMin();
+    })
+</script>

@@ -13,7 +13,7 @@ import { ViewTransitions } from "astro:transitions";
 export const navLnks: NavLink[] = [
 	{
 		label: "Home",
-		linkTo: "/home",
+		linkTo: "/",
 	},
 	{
 		label: "About",
@@ -143,11 +143,8 @@ postRecommendationsData = availablePosts.map<IPostRecData>((post) => {
 		<main class={`app ${styles.app}`}>
 			<div class={`content ${styles.content}`}>
 				<Navbar links={navLnks} />
-				<section class={`${styles.home_section} ${styles.home_greeting_section}`}>
+				<section id="home" class={`${styles.home_section} ${styles.home_greeting_section}`}>
 					<div class={styles.hg_banner}>
-						<!-- <div class={styles.hg_strip}>
-							<h4>The blog</h4>
-						</div> -->
 						<div class={styles.hg_strip}>
 							<h1>Writings from our team</h1>
 							<span data-elm-type="burst-icon"><img src="/team_ender_ill.png" alt="_" /></span>
@@ -157,7 +154,6 @@ postRecommendationsData = availablePosts.map<IPostRecData>((post) => {
 						</div>
 					</div>
 					<div class={styles.hg_poster}>
-						<!-- post of the day -->
 						<div class={styles.hg_poster_content} style={`background-image: url('${dayPostData.img}')`}>
 							<div class={styles.hg_poster_filter_overlay}></div>
 							<div class={styles.hg_poster_info}>
@@ -177,7 +173,7 @@ postRecommendationsData = availablePosts.map<IPostRecData>((post) => {
 						</div>
 					</div>
 				</section>
-				<section class={styles.section_header}>
+				<section id="recent_posts_title" class={styles.section_header}>
 					<h2>Recent Posts</h2>
 				</section>
 				<section id="cards" class={styles.post_cards_wrapper}>
