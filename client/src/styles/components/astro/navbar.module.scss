@@ -3,7 +3,8 @@ nav {
     height: 100px;
     width: 100%;
     z-index: 10;
-    background: white;
+    background: transparent;
+    backdrop-filter: blur(10px);
     position: fixed;
     &.light {
         .nav_col {
@@ -117,6 +118,7 @@ nav {
                 display: none;
                 align-items: center;
                 justify-content: center;
+                z-index: 10;
                 [astro-icon] {
                     width: 18px;
                 }
@@ -130,18 +132,18 @@ nav {
         }
     }
     .nav_min {
-        display: none;
-        // display: flex;
+        // display: none;
+        display: flex;
         position: absolute;
         flex-direction: column;
         justify-content: center;
-        .nav_min_active {
-            display: flex;
-            animation: animate-nav_min-in 0.4s linear forwards;
-        }
-        .nav_min_inactive {
-            animation: animate-nav_min-out 0.4s linear forwards;
-        }
+        // .nav_min_active {
+        //     display: flex;
+        //     animation: animate-nav_min-in 0.4s linear forwards;
+        // }
+        // .nav_min_inactive {
+        //     animation: animate-nav_min-out 0.4s linear forwards;
+        // }
         .nav_col {
             display: flex;
             height: fit-content;
@@ -169,6 +171,7 @@ nav {
                 align-items: center;
                 flex-direction: column;
                 row-gap: 20px;
+                padding: 10px;
                 li {
                     display: flex;
                     height: fit-content;
@@ -244,6 +247,7 @@ nav {
                 flex-direction: column;
                 row-gap: 10px;
                 margin-top: 2em;
+                padding: 20px;
                 button {
                     width: 100%;
                     max-width: 400px;

@@ -14,6 +14,7 @@
                 align-items: center;
                 row-gap: 20px;
                 justify-content: center;
+                margin-top: 40px;
                 .hg_strip {
                     display: flex;
                     height: fit-content;
@@ -170,8 +171,57 @@
         .content {
             .home_section {
                 padding: 4px;
+                .hg_banner {
+                    margin-top: 70px;
+                    .hg_strip {
+                        h1 {
+                            font-size: 8vw;
+                        }
+                        h3 {
+                            font-size: 3vw;
+                            text-align: center;
+                        }
+                    }
+                }
                 .hg_poster {
                     padding: 0px;
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 610px) {
+    .app {
+        .content {
+            .home_section {
+                .hg_banner {
+                    min-height: 40vh;
+                    .hg_strip {
+                        h1 {
+                            font-size: 7vw;
+                        }
+                        &:has(h1) {
+                            padding: 0px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 400px) {
+    .app {
+        .content {
+            .home_section {
+                .hg_banner {
+                    min-height: 30vh;
+                    .hg_strip {
+                        h1 {
+                            font-size: 8vw;
+                        }
+                    }
                 }
             }
         }

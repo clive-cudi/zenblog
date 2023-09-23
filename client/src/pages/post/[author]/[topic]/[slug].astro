@@ -68,7 +68,7 @@ const { post } = Astro.props;
 	<body>
 		<main class={`app ${styles.app}`}>
 			<div class={`content ${styles.content}`}>
-				<Navbar class={`${styles.post_nav}`} links={navLnks} />
+				<Navbar links={navLnks} />
 				<PostBanner bgImgURL={`${post.mainImage?.asset?.url}`} post={post} />
                 <div class={styles.main_content}>
                     <section class={styles.post_header}>

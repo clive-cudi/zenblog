@@ -12,7 +12,7 @@ const { links, ...utilProps } = Astro.props;
 
 ---
 
-<nav class={`${utilProps.class ?? ""}`}>
+<nav class={`navbar ${utilProps?.class ?? ""}`} transition:persist>
     <div class={styles.nav_content}>
         <div class={`${styles.nav_col}`}>
             <!-- icon -->
@@ -61,12 +61,12 @@ const { links, ...utilProps } = Astro.props;
             <Button id={"nav_toggle_btn"}><Icon name={"menu-line"} /></Button>
         </div>
     </div>
-    <div id="nav_min" class={`${styles.nav_min}`}>
-        <div class={styles.nav_col}>
+    <div id="nav_min" class={`${styles.nav_min} nav_min_inactive`}>
+        <!-- <div class={styles.nav_col}>
             <div class={styles.nav_icon_wrapper}>
                 <img src="/zenblog-icon-with-title-removebg-preview.png" />
             </div>
-        </div>
+        </div> -->
         <div class={styles.nav_col}>
             <ul class={styles.nav_primary_links}>
                 {links.map((lnk) => {
@@ -106,9 +106,13 @@ const { links, ...utilProps } = Astro.props;
     </div>
 </nav>
 
-<script>
+<script defer>
     const nav_min = document.getElementById("nav_min");
     const nav_btn = document.getElementById("nav_toggle_btn");
+
+    if (!nav_min) {
+        console.log('nav_min_not_found')
+    }
 
     function toggleNavMin() {
         const isActive = nav_min?.classList.contains('nav_min_active');
